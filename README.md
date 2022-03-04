@@ -32,9 +32,13 @@ terraform apply -auto-approve
 
 aws --endpoint-url=http://localhost:4566 lambda list-functions --profile local
 
-aws --endpoint-url=http://localhost:4566  lambda invoke --function-name Uppercase --profile local
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name Uppercase --profile local --payload '{"exampleField":"test"}' --cli-binary-format raw-in-base64-out  response.json
+ 
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name Uppercase --profile local --payload '{"exampleField":"test"}' --cli-binary-format raw-in-base64-out --log-type Tail --query 'LogResult' --output text  response.json | base64 -d 
+```
 
-aws --endpoint-url=http://localhost:4566  lambda invoke --function-name Uppercase --profile local --payload '{"value":"test"}' --cli-binary-format raw-in-base64-out  response.json
+```bash
+// supplier
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name Uppercase --profile local --payload '{}' --cli-binary-format raw-in-base64-out --log-type Tail --query 'LogResult'  --output text response.json | base64 -d
 
-aws --endpoint-url=http://localhost:4566 lambda invoke --function-name Uppercase --profile local --payload '{"value":"test"}'  --log-type Tail --query 'LogResult' --output text |  base64 -d
 ```
