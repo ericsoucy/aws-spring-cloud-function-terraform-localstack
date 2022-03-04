@@ -1,6 +1,7 @@
 # AWS Lambda with spring cloud function
 
 <https://docs.spring.io/spring-cloud-function/docs/current/reference/html/aws.html>
+<https://codetinkering.com/spring-cloud-function-aws-lambda/>
 
 ## Running localstack
 
@@ -40,5 +41,8 @@ aws --endpoint-url=http://localhost:4566 lambda invoke --function-name Uppercase
 ```bash
 // supplier
 aws --endpoint-url=http://localhost:4566 lambda invoke --function-name Uppercase --profile local --payload '{}' --cli-binary-format raw-in-base64-out --log-type Tail --query 'LogResult'  --output text response.json | base64 -d
+
+// consumer
+aws --endpoint-url=http://localhost:4566 lambda invoke --function-name Uppercase --profile local --payload '{"exampleField":"abc"}' --cli-binary-format raw-in-base64-out --log-type Tail --query 'LogResult' --output text  response.json | base64 -d
 
 ```
